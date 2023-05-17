@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: semoss
+  name: semoss
+spec:
+  selector:
+    matchLabels:
+      app: semoss
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: semoss
+    spec:
+      containers:
+      #This config below allows semoss app to load tables in semoss database in MYSQL DBMS. It must be embeded in image to work properly.
+      #I looked through semoss helm chart, but didn't find any config that allows it to talk any database
+      - env:
+        - name: MYSQL_DATABASE
+          value: semoss
+        - name: DATABASE_ADDRESS
+          value: mysql-svc
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: mysql-root
+        image:  devopmacaz/semoss:1.0.0
+        name: semoss
+        resources: {}
