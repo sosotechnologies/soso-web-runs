@@ -1,18 +1,15 @@
-# Set base image (host OS)
-FROM python:alpine3.8
+FROM python:3.8-alpine
 
 WORKDIR /app
 
-COPY requirements.txt /app/requirements.txt
+COPY env.py .
+COPY forms.py .
+COPY requirements.txt .
 
-RUN pip install -r requirements.txt
-COPY . /app
-#ENV PORT 5000
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
 
 EXPOSE 5000
 
-#COPY env.py .
-
-ENTRYPOINT [ "python" ]
-
-CMD [ "app.py" ]
+CMD ["python", "app.py"]
