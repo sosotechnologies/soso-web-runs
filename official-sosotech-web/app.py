@@ -18,55 +18,55 @@ app = Flask(__name__)
 mail = Mail(app) # instantiate the mail class
 
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("SQLALCHEMY_DATABASE_URI")
-db = SQLAlchemy(app) 
+# app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("SQLALCHEMY_DATABASE_URI")
+# db = SQLAlchemy(app) 
 bcrypt = Bcrypt(app)
 mail = Mail(app)
 
-# initialize the app with the extension
-db.init_app(app)
+## initialize the app with the extension
+# db.init_app(app)
 
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view='login'
-login_manager.needs_refresh_message_category='danger'
-login_manager.login_message = u"Please login first"
-
-
-
-@login_manager.user_loader
-def user_loader(user_id):
-	return Register.query.get(user_id)
-
-class Register(db.Model, UserMixin):
-    id = db.Column(db.Integer, primary_key= True)
-    email = db.Column(db.String(50), unique= True, nullable=False)
-    password = db.Column(db.String(200), unique= True, nullable=False)
-    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-
-    def __repr__(self):
-        return '<Register %r>' % self.email
-
-with app.app_context():
-    db.create_all()
+# login_manager = LoginManager()
+# login_manager.init_app(app)
+# login_manager.login_view='login'
+# login_manager.needs_refresh_message_category='danger'
+# login_manager.login_message = u"Please login first"
 
 
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    fullname = db.Column(db.String(150), unique=False, nullable=False)
-    email = db.Column(db.String(150), unique=True, nullable=False)
-    phone = db.Column(db.String(150), unique= True)
-    address = db.Column(db.String(150), unique= False)
-    city_country = db.Column(db.String(150), unique= False)
-    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+# @login_manager.user_loader
+# def user_loader(user_id):
+# 	return Register.query.get(user_id)
 
-    def __repr__(self):
-        return '<User %r>' % self.fullname
+# class Register(db.Model, UserMixin):
+#     id = db.Column(db.Integer, primary_key= True)
+#     email = db.Column(db.String(50), unique= True, nullable=False)
+#     password = db.Column(db.String(200), unique= True, nullable=False)
+#     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+#     def __repr__(self):
+#         return '<Register %r>' % self.email
+
+# with app.app_context():
+#     db.create_all()
+
+
+
+# class User(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     fullname = db.Column(db.String(150), unique=False, nullable=False)
+#     email = db.Column(db.String(150), unique=True, nullable=False)
+#     phone = db.Column(db.String(150), unique= True)
+#     address = db.Column(db.String(150), unique= False)
+#     city_country = db.Column(db.String(150), unique= False)
+#     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+#     def __repr__(self):
+#         return '<User %r>' % self.fullname
     
 
-with app.app_context():
-    db.create_all()
+# with app.app_context():
+#     db.create_all()
 
 
 
