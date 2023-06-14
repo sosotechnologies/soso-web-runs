@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: flask-configmap
+data:
+  IP: "0.0.0.0"
+  PORT: "5000"
+  SECRET_KEY: "yz6{Teyyvejqfij{TQx;s,Z#O7g~s"
+  SQLALCHEMY_DATABASE_URI: "mysql+pymysql://root:Depay50#@10.1.0.119:3306/sosotechreal"
+  MAIL_SERVER: "smtp.gmail.com"
+  MAIL_PORT: "587"
+  MAIL_USERNAME: "sosotechglobal@gmail.com"
+  MAIL_PASSWORD: "tthtyfshxjvwacsm"

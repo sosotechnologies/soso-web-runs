@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask
+  template:
+    metadata:
+      labels:
+        app: flask
+    spec:
+      containers:
+        - name: flask-app
+          image: sosotech/sosotech:6.13.1
+          ports:
+            - containerPort: 5000
+          envFrom:
+            - configMapRef:
+                name: flask-configmap
+            - secretRef:
+                name: mysql-secret
